@@ -6,34 +6,40 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aiohappyeyeballs-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 55a1714f084e63d49639800f95716da97a1f173d46a16dfcfda0016abb93b6b2
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
+  skip: True  # [py<38]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python >=3.8
+    - python
     - poetry-core >=1.0.0
     - pip
   run:
-    - python >=3.8.0
+    - python
 
 test:
   imports:
     - aiohappyeyeballs
-  commands:
-    - pip check
   requires:
     - pip
+  commands:
+    - pip check
 
 about:
   home: https://github.com/aio-libs/aiohappyeyeballs
+  dev_url: https://github.com/aio-libs/aiohappyeyeballs
+  doc_url: https://aiohappyeyeballs.readthedocs.io/
   summary: Happy Eyeballs for asyncio
+  description: |
+    This library exists to allow connecting with Happy Eyeballs (RFC 8305)
+    when you already have a list of addrinfo and not a DNS name.
   license: PSF-2.0
+  license_family: Other
   license_file: LICENSE
 
 extra:
