@@ -23,12 +23,17 @@ requirements:
     - python
 
 test:
+  source_files:
+    - tests/
   imports:
     - aiohappyeyeballs
   requires:
     - pip
+    - pytest >=7
+    - pytest-asyncio >=0.23.2
   commands:
     - pip check
+    - pytest tests/ -v
 
 about:
   home: https://github.com/aio-libs/aiohappyeyeballs
