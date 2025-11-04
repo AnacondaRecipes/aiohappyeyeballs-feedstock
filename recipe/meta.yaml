@@ -24,7 +24,8 @@ requirements:
 
 test:
   source_files:
-    - tests/
+    - tests
+    - pyproject.toml
   imports:
     - aiohappyeyeballs
   requires:
@@ -33,6 +34,7 @@ test:
     - pytest-asyncio >=0.23.2
   commands:
     - pip check
+    - pytest --fixtures
     - pytest tests/ -v
 
 about:
