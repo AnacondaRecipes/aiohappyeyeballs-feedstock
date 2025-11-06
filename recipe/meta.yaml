@@ -10,7 +10,7 @@ source:
   sha256: c3f9d0113123803ccadfdf3f0faa505bc78e6a72d1cc4806cbd719826e943558
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<39]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
@@ -24,7 +24,7 @@ requirements:
 
 test:
   source_files:
-    - tests/
+    - tests
   imports:
     - aiohappyeyeballs
   requires:
@@ -33,7 +33,11 @@ test:
     - pytest-asyncio >=0.23.2
   commands:
     - pip check
-    - pytest tests/ -v
+    # Remove a workaround when aiohappyeyeballs >2.6.1 (with pytest-asyncio >=1.0.0)
+    # fixes the issue "fixture 'event_loop' not found " for Python 3.14+.
+    # Patching the conftest.py by replacing True with False in https://github.com/aio-libs/aiohappyeyeballs/blob/v2.6.1/tests/conftest.py#L43C17-L43C29
+    - python -c "from pathlib import Path; p = Path('tests/conftest.py'); p.write_text(p.read_text().replace('True', 'False'))"
+    - pytest tests/ -vv
 
 about:
   home: https://github.com/aio-libs/aiohappyeyeballs
