@@ -22,3 +22,6 @@
 /build_artifacts
 
 *.pyc
+
+# py315 opt-in lives at repo root, same as anaconda.yaml
+!/abs.yaml
